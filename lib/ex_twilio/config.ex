@@ -34,10 +34,18 @@ defmodule ExTwilio.Config do
   def api_version, do: Application.get_env(:ex_twilio, :api_version) || "2010-04-01"
 
   @doc """
+  Returns the scheme to use for the Twilio API. This will default to "https". It can be useful to
+  change to "http" for testing against a Bypass dummy server. Set it in `mix.exs`:
+
+      config :ex_twilio, api_scheme: "http"
+  """
+  def api_scheme, do: Application.get_env(:ex_twilio, :api_scheme) || "https"
+
+  @doc """
   Return the combined base URL of the Twilio API, using the configuration
   settings given.
   """
   def base_url do
-    "https://#{api_domain}/#{api_version}"
+    "#{api_scheme}://#{api_domain}/#{api_version}"
   end
 end
